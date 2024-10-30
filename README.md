@@ -12,7 +12,7 @@ Analyze and visualize WhatsApp messages, with statistics on frequency and activi
 ### whatsapp_to_dataframe.py
 Reads the WhatsApp chat in .txt format and processes it by exporting an Excel file with the date, time, member who sent the message and the message sent.
 
-**Remark:** You can change the Excel file to a .csv by changing the last line of the code `data.to_excel('chat.xlsx', index=False)` to `data.to_excel('chat.csv', index=False)`.
+**Remark:** You can change the Excel file to .csv by changing the last line of the code `data.to_excel('chat.xlsx', index=False)` to `data.to_excel('chat.csv', index=False)`.
 
 ### messages_per_hour.py
 Gives a bar graph with the messages sent in each hour of the day. The colors of each bar will be a gradient of a color defined in the variable `base_color` and will increase to lighter tones as the number of messages decreases.
