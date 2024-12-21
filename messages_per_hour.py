@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-os.system('cls')
+# os.system('cls')
 
 data = pd.read_excel('chat.xlsx')
 
@@ -70,5 +70,5 @@ colors = asignColorString(messages_per_hour, base_color)
 # Plotting
 fig, ax = plt.subplots(figsize=(10,5))
 ax.bar(X_axis, messages_per_hour, color=colors)
-plt.savefig('mensajes por hora.png')
+plt.savefig('plots/mensajes por hora.png')
 plt.show()
