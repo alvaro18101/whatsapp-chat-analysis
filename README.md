@@ -8,6 +8,15 @@ Analyze and visualize WhatsApp messages, with statistics on frequency and activi
 4. Run the `whatsapp_to_dataframe.py` file first to get the Excel file with the messages.
 5. Run the remaining .py files
 
+## Stats obtained
+- General stats: Amount of total messages, text messages, multimedia, emojis and links
+- Message per person: amount and percent, text messages, multimedia, emojis and links
+- Top most used emojis
+- Plot of messages per hour
+- Top most used words
+- PLot of messages per day
+- Plot of messages over time
+
 ## Codes
 ### whatsapp_to_dataframe.py
 Reads the WhatsApp chat in .txt format and processes it by exporting an Excel file with the date, time, member who sent the message and the message sent.
