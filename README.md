@@ -9,11 +9,11 @@ Analyze and visualize WhatsApp messages, with statistics on frequency and activi
 5. Run the remaining .py files
 
 ## Stats obtained
-- General stats: Amount of total messages, text messages, multimedia, emojis and links
-- Message per person: amount and percent, text messages, multimedia, emojis and links
-- Top most used emojis
-- Plot of messages per hour
-- Top most used words
+- [x] General stats: Amount of total messages, text messages, multimedia and links
+- Messages per person: amount and percent, text messages, multimedia and links
+- [x] Most used words
+- [x] Most used emojis
+- [x] Plot of messages per hour
 - PLot of messages per day
 - Plot of messages over time
 

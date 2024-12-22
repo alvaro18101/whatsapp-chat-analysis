@@ -6,7 +6,6 @@ os.system('cls')
 chat_name = 'WhatsApp Chat with Norka.txt'
 with open(chat_name, encoding='utf-8') as file:
     chat = file.read()
-# emoji = chat[-207]
 
 chat = chat[chat.index('\n')+1:-1] # Remove the first message (encryption information) and the last one (empty string)
 chat_split = chat.split('\n')
