@@ -38,5 +38,4 @@ Prints to the console:
 
 ## Features to be implemented:
 - Chart with most used emojis
-- Quantity of multimedia sent
 - Who starts more conversations?
