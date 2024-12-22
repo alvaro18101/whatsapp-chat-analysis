@@ -6,34 +6,54 @@ os.system('cls')
 data = pd.read_excel('chat.xlsx')
 
 # --- GENERAL STATS ---
-general_stats = pd.DataFrame(columns=['Total messages', 'Text messages', 'Multimedia', 'Links'])
+def get_general_stats(data):
+    general_stats = pd.DataFrame(columns=['Total messages', 'Text messages', 'Multimedia', 'Links'])
 
-general_stats['Total messages'] = [len(data)]
-general_stats['Multimedia'] = (data['Mensaje'] == '<Media omitted>').sum()
+    general_stats['Total messages'] = [len(data)]
+    general_stats['Multimedia'] = (data['Mensaje'] == '<Media omitted>').sum()
 
-messages_counter = data['Mensaje'].value_counts()
-links_sent = 0
-for i in messages_counter.keys():
-    if 'https://' in i:
-        links_sent += 1
+    messages_counter = data['Mensaje'].value_counts()
+    links_sent = 0
+    for i in messages_counter.keys():
+        if 'https://' in i:
+            links_sent += 1
 
-general_stats['Links'] = links_sent
-general_stats['Text messages'] = len(data) - ((data['Mensaje'] == '<Media omitted>').sum() + links_sent)
+    general_stats['Links'] = links_sent
+    general_stats['Text messages'] = len(data) - ((data['Mensaje'] == '<Media omitted>').sum() + links_sent)
+    return general_stats
 
-print('GENERAL STATS')
+general_stats = get_general_stats(data)
+
+print('--- GENERAL STATS ---')
 for i in general_stats:
     print(f'{i}: {general_stats[i][0]}')
 
-# --- Message per person. Who sent more messages? ---
-members =  data['Miembro'].unique()
-messages_number = []
 
+
+# --- Message per person. Who sent more messages? ---
 print()
-print('MESSAGES PER PERSON')
+print()
+print('--- MESSAGES PER PERSON ---')
+members =  data['Miembro'].unique()
+data_member_1 = data[data['Miembro'] == members[0]]
+data_member_2 = data[data['Miembro'] == members[1]]
+
+general_stats_1 = get_general_stats(data_member_1)
+general_stats_2 = get_general_stats(data_member_2)
+
+print(f'General Stats of {members[0]}')
+for i in general_stats_1:
+    print(f'\t{i}: {general_stats_1[i][0]}')
+print()
+print(f'General Stats of {members[1]}')
+for i in general_stats_2:
+    print(f'\t{i}: {general_stats_2[i][0]}')
+
+messages_number = []
 for i in range(len(members)):
-    print(f'Mensajes enviados por {members[i]}: {len(data[data['Miembro'] == members[i]])}')
     messages_number.append(len(data[data['Miembro'] == members[i]]))
-print('Porcentaje de mensajes enviados:')
+print()
+print('Percent of sent messages:')
 for i in range(len(members)):
     print(f'\t{members[i]}: {round(messages_number[i]/sum(messages_number)*100, 2)}%')
 
@@ -55,7 +75,8 @@ for i in total_messages:
 
 word_counter_sorted = dict(sorted(word_counter.items(), key=lambda item: item[1], reverse=True))
 print()
-print('MOST USED WORDS')
+print()
+print('--- MOST USED WORDS ---')
 print(f'Total words used: {sum(word_counter_sorted.values())}')
 for i in list(word_counter_sorted.keys())[0:10]:
     print(f'{i}: {word_counter_sorted[i]}')
@@ -72,7 +93,8 @@ for i in total_messages:
 emojis_sent_sorted = dict(sorted(emojis_sent.items(), key=lambda item: item[1], reverse=True))
 
 print()
-print('MOST USED EMOJIS')
+print()
+print('--- MOST USED EMOJIS ---')
 print(f'Total emojis used: {sum(emojis_sent.values())}')
 if len(emojis_sent)<10:
     for i in emojis_sent_sorted:
