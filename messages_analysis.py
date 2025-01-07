@@ -78,8 +78,13 @@ print()
 print()
 print('--- MOST USED WORDS ---')
 print(f'Total words used: {sum(word_counter_sorted.values())}')
-for i in list(word_counter_sorted.keys())[0:10]:
-    print(f'{i}: {word_counter_sorted[i]}')
+j = 0
+for i in list(word_counter_sorted.keys()):
+    if i not in emoji.EMOJI_DATA:
+        print(f'{i}: {word_counter_sorted[i]}')
+        j +=1
+    if j == 10: 
+        break
 
 # --- MOST USED EMOJIS ---
 emojis_sent = {}
