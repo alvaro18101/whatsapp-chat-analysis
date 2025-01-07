@@ -7,7 +7,7 @@ data = pd.read_excel('chat.xlsx')
 
 # Get messages per hour for every hour of the day
 time_format = lambda string: int(string[:-6])%12 if string[-2:] == 'am' else int(string[:-6])%12 + 12
-hour_data = data['Hora'].apply(time_format)
+hour_data = data['Time'].apply(time_format)
 messages_per_hour = [0 for i in range(24)]
 for i in hour_data:
     messages_per_hour[i] += 1
@@ -83,5 +83,5 @@ colors = asign_color_string(dic_messages_per_hour, base_color)
 # Plotting
 fig, ax = plt.subplots(figsize=(10,5))
 ax.bar(X_axis, messages_per_hour, color=colors)
-plt.savefig('plots/mensajes por hora.png')
+plt.savefig('plots/messages per hour.png')
 plt.show()

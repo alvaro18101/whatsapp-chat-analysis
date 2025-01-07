@@ -3,7 +3,7 @@ import os
 import pandas as pd
 os.system('cls')
 
-chat_name = 'WhatsApp Chat with Norka.txt'
+chat_name = 'WhatsApp Chat with ⭐ Norka Dávila ⭐.txt'
 with open(chat_name, encoding='utf-8') as file:
     chat = file.read()
 
@@ -19,13 +19,13 @@ def verifyMessage(line_message):
         return False
 
 
-def getData(line_message):
-    date = re.search(r'[0-9]+/[0-9]+/[0-9]+', line_message).group()
-    time = re.search(r'[0-9]+:[0-9]+\s(a|p)m', line_message).group()
-    line_message = line_message.replace(date + ', ' + time + ' - ','')
-    contact = line_message[0:line_message.index(':')]
-    message = line_message[line_message.index(':')+2:]
-    return date, time, contact, message
+# def getData(line_message):
+#     date = re.search(r'[0-9]+/[0-9]+/[0-9]+', line_message).group()
+#     time = re.search(r'[0-9]+:[0-9]+\s(a|p)m', line_message).group()
+#     line_message = line_message.replace(date + ', ' + time + ' - ','')
+#     contact = line_message[0:line_message.index(':')]
+#     message = line_message[line_message.index(':')+2:]
+#     return date, time, contact, message
 
 i = 0
 for line_message in chat_split:
@@ -37,9 +37,9 @@ for line_message in chat_split:
 for i in range(chat_split.count('---')):
     chat_split.remove('---')
 
-print('Cantidad de mensajes: ', len(chat_split))
+print('Number of messages: ', len(chat_split))
 
-data = pd.DataFrame(columns=['Fecha', 'Hora', 'Miembro', 'Mensaje'])
+data = pd.DataFrame(columns=['Date', 'Time', 'User', 'Message'])
 for line_message in chat_split:
     date = re.search(r'[0-9]+/[0-9]+/[0-9]+', line_message).group()
     time = re.search(r'[0-9]+:[0-9]+\s(a|p)m', line_message).group()
@@ -47,8 +47,9 @@ for line_message in chat_split:
     contact = line_message[0:line_message.index(':')]
     message = line_message[line_message.index(':')+2:]
 
-    data = data._append({'Fecha': date, 'Hora': time, 'Miembro': contact, 'Mensaje': message}, ignore_index=True)
+    data = data._append({'Date': date, 'Time': time, 'User': contact, 'Message': message}, ignore_index=True)
 
-data['Hora'] = data['Hora'].str.replace('\u202f', ' ')
+data['Time'] = data['Time'].str.replace('\u202f', ' ')
 
 data.to_excel('chat.xlsx', index=False)
+print('Chat exported to Excel file')

@@ -10,16 +10,16 @@ def get_general_stats(data):
     general_stats = pd.DataFrame(columns=['Total messages', 'Text messages', 'Multimedia', 'Links'])
 
     general_stats['Total messages'] = [len(data)]
-    general_stats['Multimedia'] = (data['Mensaje'] == '<Media omitted>').sum()
+    general_stats['Multimedia'] = (data['Message'] == '<Media omitted>').sum()
 
-    messages_counter = data['Mensaje'].value_counts()
+    messages_counter = data['Message'].value_counts()
     links_sent = 0
     for i in messages_counter.keys():
         if 'https://' in i:
             links_sent += 1
 
     general_stats['Links'] = links_sent
-    general_stats['Text messages'] = len(data) - ((data['Mensaje'] == '<Media omitted>').sum() + links_sent)
+    general_stats['Text messages'] = len(data) - ((data['Message'] == '<Media omitted>').sum() + links_sent)
     return general_stats
 
 general_stats = get_general_stats(data)
@@ -34,9 +34,9 @@ for i in general_stats:
 print()
 print()
 print('--- MESSAGES PER PERSON ---')
-members =  data['Miembro'].unique()
-data_member_1 = data[data['Miembro'] == members[0]]
-data_member_2 = data[data['Miembro'] == members[1]]
+members =  data['User'].unique()
+data_member_1 = data[data['User'] == members[0]]
+data_member_2 = data[data['User'] == members[1]]
 
 general_stats_1 = get_general_stats(data_member_1)
 general_stats_2 = get_general_stats(data_member_2)
@@ -51,15 +51,16 @@ for i in general_stats_2:
 
 messages_number = []
 for i in range(len(members)):
-    messages_number.append(len(data[data['Miembro'] == members[i]]))
+    messages_number.append(len(data[data['User'] == members[i]]))
 print()
 print('Percent of sent messages:')
 for i in range(len(members)):
     print(f'\t{members[i]}: {round(messages_number[i]/sum(messages_number)*100, 2)}%')
 
+
 # --- MOST USED WORDS ---
 total_messages = ''
-for i in data['Mensaje']:
+for i in data['Message']:
     try:
         if i != '<Media omitted>':
             total_messages += i + ' '
@@ -85,6 +86,7 @@ for i in list(word_counter_sorted.keys()):
         j +=1
     if j == 10: 
         break
+
 
 # --- MOST USED EMOJIS ---
 emojis_sent = {}
