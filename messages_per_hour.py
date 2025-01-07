@@ -14,8 +14,12 @@ for i in hour_data:
 
 X_axis = [str(i) + 'h' for i in range(24)]
 
+dic_messages_per_hour = {}
+for i in range(len(messages_per_hour)):
+    dic_messages_per_hour[i] = messages_per_hour[i]
+
 # Add a unit (in base 16)
-def nextIntensityValue(value):
+def next_intensity_value(value):
     letters = ['a', 'b', 'c', 'd', 'e', 'f']
     if value in letters:
         return letters[letters.index(value) + 1] if value != 'f' else 'f'
@@ -24,48 +28,57 @@ def nextIntensityValue(value):
         return value if value != '10' else 'a'
 
 # Add a unit to the color code
-def increaseColor(color_hex_code):
+def increase_color(color_hex_code):
     j = 6
     for i in color_hex_code[::-1]:
         if i != 'f':
             break
         j -= 1
     p1 = color_hex_code[:j]
-    chance = nextIntensityValue(color_hex_code[j])
+    chance = next_intensity_value(color_hex_code[j])
     p2 = color_hex_code[j+1:]
     if j != 6:
         p2 = '0' + color_hex_code[j+2:]
     return p1 + chance + p2
 
 # Add n units to the color code
-def increaseColorSeveralTimes(color_hex_code, n):
+def increase_color_several_times(color_hex_code, n):
     for i in range(n):
-        color_hex_code = increaseColor(color_hex_code)
+        color_hex_code = increase_color(color_hex_code)
     return color_hex_code
 
-# Sort the color intensities based on number of message per hour 
-def asignColorString(messages_number, base_color):
-    messages_number = messages_number.copy()
-    messages_number_ordered = messages_number.copy()
-    messages_number_ordered.sort()
-    colors = [0 for i in range(len(messages_per_hour))]
-    for i in range(len(messages_per_hour)):
-        current_message_number = messages_number_ordered[i]
-        index_color = messages_per_hour.index(current_message_number)
-        if i == 0:
-            colors[index_color] = base_color
+# Sort the color intensities based on number of message per hour
+def asign_color_string(dic_messages_number, base_color):
+    dic_messages_number_ordered = dict(sorted(dic_messages_number.items(), key=lambda item: item[1])) # Order messages for amount of messages
+    dic_colors = dic_messages_number_ordered.copy()
+    colors = []
+    previus_hour_index = -1
+    for i in dic_messages_number_ordered:
+        if dic_messages_number_ordered[i] == 0:
+            colors.append('#000000')
         else:
-            if messages_number_ordered[i] != messages_number_ordered[i-1]:
-                base_color = increaseColorSeveralTimes(base_color, 6)
-                colors[index_color] = base_color
-            if messages_number_ordered[i] == messages_number_ordered[i-1]:
-                colors[index_color] = base_color
-        messages_number[index_color] = ''
-    return colors
+            current_amount_messages = dic_messages_number_ordered[i]
+            try:
+                previus_amount_messages = dic_messages_number_ordered[previus_hour_index]
+                if current_amount_messages == previus_amount_messages:
+                    colors.append(base_color)
+                else:
+                    colors.append(base_color)
+                    base_color = increase_color_several_times(base_color, 6)
+            except:
+                colors.append(base_color)
+                base_color = increase_color_several_times(base_color, 6)
+        previus_hour_index = i
+    j = 0
+    for i in dic_colors:
+        dic_colors[i] = colors[j]
+        j += 1
+    dic_colors_ordered = dict(sorted(dic_colors.items(), key=lambda item: item[0]))
+    return list(dic_colors_ordered.values())
 
-base_color = '#f8c0cb'
 base_color = '#00ba11'
-colors = asignColorString(messages_per_hour, base_color)
+
+colors = asign_color_string(dic_messages_per_hour, base_color)
 
 # Plotting
 fig, ax = plt.subplots(figsize=(10,5))
