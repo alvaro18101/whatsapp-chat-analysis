@@ -34,8 +34,6 @@ Prints to the console:
 - Most used word
 - Most used emoji
 
-**Remark:** The text shown is in Spanish, for the moment.
-
 ## Features to be implemented:
 - Chart with most used emojis
 - Who starts more conversations?
