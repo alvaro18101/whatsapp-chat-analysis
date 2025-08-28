@@ -9,7 +9,7 @@ Analyze and visualize WhatsApp messages, with statistics on frequency and activi
 python -m pip install -r requirements.txt
 ```
 or
-```
+```bash
 pip install -r requirements.txt
 ```
 4. Run the `whatsapp_to_dataframe.py` file first to get the Excel file with the messages.
