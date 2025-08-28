@@ -4,7 +4,14 @@ Analyze and visualize WhatsApp messages, with statistics on frequency and activi
 ## Steps to follow:
 1. Export the WhatsApp chat (without files), you should get a .txt file
 2. Place the file in the same folder as the python files
-3. Install the dependencies by running `python -m pip install -r requirements.txt` or `pip install -r requirements.txt`
+3. Install the dependencies by running
+```bash
+python -m pip install -r requirements.txt
+```
+or
+```
+pip install -r requirements.txt
+```
 4. Run the `whatsapp_to_dataframe.py` file first to get the Excel file with the messages.
 5. Run the remaining .py files
 
